@@ -1,6 +1,6 @@
-# Friday Night Funkin
+# funkin 2.7.9
+### so this is just my funkin build lol
 
-This is the repository for Friday Night Funkin, a game originally made for Ludum Dare 47 "Stuck In a Loop".
+> WAT IS DIS GARBAGE
 
-Play the Ludum Dare prototype here: https://ninja-muffin24.itch.io/friday-night-funkin
-Play the Newgrounds one here: https://www.newgrounds.com/portal/view/770371
+its my custom thing for funkin
