@@ -525,20 +525,28 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.PAUSE, [ENTER]);
 				inline bindKeys(Control.RESET, [BACKSPACE]);
 			case None: // nothing
-			case Custom: // nothing
+			case Custom:
+				inline bindKeys(Control.UP, [J, FlxKey.UP]);
+				inline bindKeys(Control.DOWN, [F, FlxKey.DOWN]);
+				inline bindKeys(Control.LEFT, [D, FlxKey.LEFT]);
+				inline bindKeys(Control.RIGHT, [K, FlxKey.RIGHT]);
+				inline bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
+				inline bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
+				inline bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
+				inline bindKeys(Control.RESET, [Q]);
 		}
 		#else
 		switch (scheme)
 		{
 			case Solo:
-				bindKeys(Control.UP, [W, FlxKey.UP]);
-				bindKeys(Control.DOWN, [S, FlxKey.DOWN]);
-				bindKeys(Control.LEFT, [A, FlxKey.LEFT]);
-				bindKeys(Control.RIGHT, [D, FlxKey.RIGHT]);
+				bindKeys(Control.UP, [J, FlxKey.UP]);
+				bindKeys(Control.DOWN, [F, FlxKey.DOWN]);
+				bindKeys(Control.LEFT, [D, FlxKey.LEFT]);
+				bindKeys(Control.RIGHT, [K, FlxKey.RIGHT]);
 				bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
 				bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
 				bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
-				bindKeys(Control.RESET, [R]);
+				bindKeys(Control.RESET, [Q]);
 			case Duo(true):
 				bindKeys(Control.UP, [W]);
 				bindKeys(Control.DOWN, [S]);
@@ -558,7 +566,15 @@ class Controls extends FlxActionSet
 				bindKeys(Control.PAUSE, [ENTER]);
 				bindKeys(Control.RESET, [BACKSPACE]);
 			case None: // nothing
-			case Custom: // nothing
+			case Custom:
+				bindKeys(Control.UP, [J, FlxKey.UP]);
+				bindKeys(Control.DOWN, [F, FlxKey.DOWN]);
+				bindKeys(Control.LEFT, [D, FlxKey.LEFT]);
+				bindKeys(Control.RIGHT, [K, FlxKey.RIGHT]);
+				bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
+				bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
+				bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
+				bindKeys(Control.RESET, [Q]);
 		}
 		#end
 	}
@@ -720,7 +736,7 @@ class Controls extends FlxActionSet
 		switch (device)
 		{
 			case Keys:
-				setKeyboardScheme(None);
+				setKeyboardScheme(Custom);
 			case Gamepad(id):
 				removeGamepad(id);
 		}

@@ -12,6 +12,7 @@ typedef SwagSong =
 	var song:String;
 	var notes:Array<SwagSection>;
 	var bpm:Int;
+	var shakeAmount:Float;
 	var needsVoices:Bool;
 	var speed:Float;
 
@@ -30,12 +31,14 @@ class Song
 
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
+	public var shakeAmount:Float = .009;
 
-	public function new(song, notes, bpm)
+	public function new(song, notes, bpm, shakeAmount)
 	{
 		this.song = song;
 		this.notes = notes;
 		this.bpm = bpm;
+		this.shakeAmount = shakeAmount;
 	}
 
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong

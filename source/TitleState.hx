@@ -39,20 +39,26 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
+	var dfjk:Bool;
 
 	var curWacky:Array<String> = [];
+	var nameLines:Array<String> = [];
 
 	var wackyImage:FlxSprite;
 
 	override public function create():Void
 	{
-		#if polymod
+		//#if polymod
+		FlxG.save.bind('funkin', 'dark279');
 		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
-		#end
+		//#end
+		dfjk = FlxG.save.data.dfjk;
 
+		PlayerSettings.reset();
 		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
+		nameLines = FlxG.random.getObject(funkyText());
 
 		// DEBUG BULLSHIT
 
@@ -229,6 +235,20 @@ class TitleState extends MusicBeatState
 
 		return swagGoodArray;
 	}
+	function funkyText():Array<Array<String>>
+		{
+			var fullText:String = Assets.getText(Paths.txt('nameText'));
+	
+			var firstArray:Array<String> = fullText.split('\n');
+			var swagGoodArray:Array<Array<String>> = [];
+	
+			for (i in firstArray)
+			{
+				swagGoodArray.push(i.split('--'));
+			}
+	
+			return swagGoodArray;
+		}
 
 	var transitioning:Bool = false;
 
@@ -280,7 +300,7 @@ class TitleState extends MusicBeatState
 
 			titleText.animation.play('press');
 
-			FlxG.camera.flash(FlxColor.WHITE, 1);
+			FlxG.camera.flash(FlxColor.BLUE, 1);
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 			transitioning = true;
@@ -294,9 +314,8 @@ class TitleState extends MusicBeatState
 
 				if (version.trim() != NGio.GAME_VER_NUMS.trim() && !OutdatedSubState.leftState)
 				{
-					FlxG.switchState(new OutdatedSubState());
-					trace('OLD VERSION!');
-					trace('old ver');
+					FlxG.switchState(new MainMenuState());
+					trace('OLD VERSION! BUT IDC!');
 					trace(version.trim());
 					trace('cur ver');
 					trace(NGio.GAME_VER_NUMS.trim());
@@ -312,6 +331,8 @@ class TitleState extends MusicBeatState
 		if (pressedEnter && !skippedIntro)
 		{
 			skipIntro();
+			PlayerSettings.reset();
+			PlayerSettings.init();
 		}
 
 		super.update(elapsed);
@@ -355,15 +376,21 @@ class TitleState extends MusicBeatState
 		danceLeft = !danceLeft;
 
 		if (danceLeft)
+			{
+			//if(skippedIntro){FlxG.camera.flash(FlxColor.PURPLE, .4);}
 			gfDance.animation.play('danceRight');
+			}
 		else
+			{
+			//if(skippedIntro){FlxG.camera.flash(FlxColor.PINK, .4);}
 			gfDance.animation.play('danceLeft');
+			}
 
 		FlxG.log.add(curBeat);
 
 		switch (curBeat)
 		{
-			case 1:
+			case 2:
 				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 			// credTextShit.visible = true;
 			case 3:
@@ -378,7 +405,7 @@ class TitleState extends MusicBeatState
 			case 5:
 				createCoolText(['In association', 'with']);
 			case 7:
-				addMoreText('newgrounds');
+				addMoreText('these guys');
 				ngSpr.visible = true;
 			// credTextShit.text += '\nNewgrounds';
 			case 8:
@@ -400,13 +427,13 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
 			case 13:
-				addMoreText('Friday');
+				addMoreText(nameLines[0]);
 			// credTextShit.visible = true;
 			case 14:
-				addMoreText('Night');
+				addMoreText(nameLines[1]);
 			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+				addMoreText(nameLines[2]); // credTextShit.text += '\nFunkin';
 
 			case 16:
 				skipIntro();
@@ -420,8 +447,10 @@ class TitleState extends MusicBeatState
 		if (!skippedIntro)
 		{
 			remove(ngSpr);
+			PlayerSettings.reset();
+			PlayerSettings.init();
 
-			FlxG.camera.flash(FlxColor.WHITE, 4);
+			FlxG.camera.flash(FlxColor.RED, 1);
 			remove(credGroup);
 			skippedIntro = true;
 		}

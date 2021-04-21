@@ -8,7 +8,7 @@ import flixel.util.FlxColor;
 
 class OptionsSubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = ['Master Volume', 'Sound Volume', 'Controls'];
+	var textMenuItems:Array<String> = ['Controls', 'Others'];
 
 	var selector:FlxSprite;
 	var curSelected:Int = 0;
@@ -66,5 +66,9 @@ class OptionsSubState extends MusicBeatSubstate
 					FlxG.state.openSubState(new ControlsSubState());
 			}
 		}
+		if (controls.BACK)
+			{
+				FlxG.switchState(new MainMenuState());
+			}
 	}
 }

@@ -35,6 +35,7 @@ class PlayerSettings
 
 	function new(id, scheme)
 	{
+		FlxG.save.bind('funkin', 'dark279');
 		this.id = id;
 		this.controls = new Controls('player$id', scheme);
 	}
@@ -117,9 +118,13 @@ class PlayerSettings
 	 */
 	static public function init():Void
 	{
+		FlxG.save.bind('funkin', 'dark279');
 		if (player1 == null)
 		{
-			player1 = new PlayerSettings(0, Solo);
+			if(FlxG.save.data.dfjk)
+				player1 = new PlayerSettings(0, Custom);
+			else if(!FlxG.save.data.dfjk)
+				player1 = new PlayerSettings(0, Solo);
 			++numPlayers;
 		}
 
@@ -156,5 +161,6 @@ class PlayerSettings
 		player1 = null;
 		player2 = null;
 		numPlayers = 0;
+		init();
 	}
 }

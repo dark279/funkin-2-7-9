@@ -24,6 +24,7 @@ class MainMenuState extends MusicBeatState
 	var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
+	
 
 	#if !switch
 	var optionShit:Array<String> = ['story mode', 'freeplay', 'donate', 'options'];
@@ -38,6 +39,8 @@ class MainMenuState extends MusicBeatState
 	{
 		#if desktop
 		// Updating Discord Rich Presence
+		PlayerSettings.reset();
+		PlayerSettings.init();
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
@@ -96,7 +99,7 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.06);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "v" + Application.current.meta.get('version'), 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "" + Application.current.meta.get('version'), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -194,6 +197,8 @@ class MainMenuState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+		PlayerSettings.reset();
+		PlayerSettings.init();
 
 		menuItems.forEach(function(spr:FlxSprite)
 		{

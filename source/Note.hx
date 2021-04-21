@@ -170,7 +170,7 @@ class Note extends FlxSprite
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-
+		
 		if (mustPress)
 		{
 			// The * 0.5 is so that it's easier to hit them too late, instead of too early
@@ -197,4 +197,7 @@ class Note extends FlxSprite
 				alpha = 0.3;
 		}
 	}
+	public function click(e:Dynamic) {
+		trace('test');
+	 }
 }

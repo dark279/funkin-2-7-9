@@ -22,7 +22,7 @@ class FreeplayState extends MusicBeatState
 	var selector:FlxText;
 	var curSelected:Int = 0;
 	var curDifficulty:Int = 1;
-
+	var logoBl:FlxSprite;
 	var scoreText:FlxText;
 	var diffText:FlxText;
 	var lerpScore:Int = 0;
@@ -65,7 +65,7 @@ class FreeplayState extends MusicBeatState
 			addWeek(['Bopeebo', 'Fresh', 'Dadbattle'], 1, ['dad']);
 
 		if (StoryMenuState.weekUnlocked[2] || isDebug)
-			addWeek(['Spookeez', 'South', 'Monster'], 2, ['spooky']);
+			addWeek(['Spookeez', 'South', 'Monster'], 2, ['spooky', 'spooky', 'monster']);
 
 		if (StoryMenuState.weekUnlocked[3] || isDebug)
 			addWeek(['Pico', 'Philly', 'Blammed'], 3, ['pico']);
@@ -152,7 +152,12 @@ class FreeplayState extends MusicBeatState
 
 			trace(md);
 		 */
-
+		 logoBl = new FlxSprite(835, 56);
+		 logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+		 logoBl.antialiasing = true;
+		 logoBl.animation.addByPrefix('bump', 'logo bumpin', (Std.int(Song.loadFromJson(Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty), songs[curSelected].songName.toLowerCase()).bpm / 2)));
+		 logoBl.scale.set(0.5, 0.5);
+		 add(logoBl);
 		super.create();
 	}
 
@@ -199,10 +204,12 @@ class FreeplayState extends MusicBeatState
 		if (upP)
 		{
 			changeSelection(-1);
+			logoBl.animation.addByPrefix('bump', 'logo bumpin', (Std.int(Song.loadFromJson(Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty), songs[curSelected].songName.toLowerCase()).bpm / 4)));
 		}
 		if (downP)
 		{
 			changeSelection(1);
+			logoBl.animation.addByPrefix('bump', 'logo bumpin', (Std.int(Song.loadFromJson(Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty), songs[curSelected].songName.toLowerCase()).bpm / 4)));
 		}
 
 		if (controls.LEFT_P)
@@ -229,6 +236,12 @@ class FreeplayState extends MusicBeatState
 			trace('CUR WEEK' + PlayState.storyWeek);
 			LoadingState.loadAndSwitchState(new PlayState());
 		}
+		
+		logoBl.animation.play('bump');
+		logoBl.scale.set(0.5, 0.5);
+		logoBl.updateHitbox();
+
+		//trace("X: " + logoBl.x + " Y: " + logoBl.y);
 	}
 
 	function changeDiff(change:Int = 0)
@@ -279,7 +292,8 @@ class FreeplayState extends MusicBeatState
 		#end
 
 		#if PRELOAD_ALL
-		FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+		if(FlxG.save.data.playFpSongs)
+			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
 		#end
 
 		var bullShit:Int = 0;
